@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SurakshaVision AI (सुरक्षाविजन AI) - Industrial Safety & PPE Vision</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+<body>
+
+  <!-- Top Sticky Header -->
+  <header class="header-wrapper">
+    <div class="container header-content">
+      <div class="brand-section">
+        <div class="brand-icon-box">🛡️</div>
+        <div class="brand-titles">
+          <div class="brand-title">
+            <span data-i18n="brandTitle">SurakshaVision AI (सुरक्षाविजन AI)</span>
+            <span class="brand-tag">ISO 45001</span>
+          </div>
+          <div class="brand-subtitle" data-i18n="brandSubtitle">
+            Real-Time Industrial Safety Vision, PPE Compliance & Hazard Prevention
+          </div>
+        </div>
+      </div>
+
+      <div class="controls-section">
+        <!-- Location Indicator -->
+        <div class="location-indicator" id="location-status" title="Accurate Indian State Location">
+          📍 <strong>Telangana</strong> ✓
+        </div>
+
+        <!-- State Selector Override -->
+        <div class="control-pill">
+          <label for="state-select">State:</label>
+          <select id="state-select" class="control-select">
+            <option value="Telangana">Telangana (తెలుగు)</option>
+            <option value="Andhra Pradesh">Andhra Pradesh (తెలుగు)</option>
+            <option value="Karnataka">Karnataka (ಕನ್ನಡ)</option>
+            <option value="Tamil Nadu">Tamil Nadu (தமிழ்)</option>
+            <option value="Maharashtra">Maharashtra (मराठी)</option>
+            <option value="Odisha">Odisha (ଓଡ଼ିଆ)</option>
+            <option value="Assam">Assam (অসমীয়া)</option>
+            <option value="North India (Delhi/UP/MP)">North India (हिन्दी)</option>
+          </select>
+        </div>
+
+        <!-- Language Selector -->
+        <div class="control-pill">
+          <label for="lang-select">🌐 Lang:</label>
+          <select id="lang-select" class="control-select">
+            <option value="te">తెలుగు (Telugu)</option>
+            <option value="hi">हिन्दी (Hindi)</option>
+            <option value="en">English</option>
+            <option value="ta">தமிழ் (Tamil)</option>
+            <option value="mr">मराठी (Marathi)</option>
+            <option value="kn">ಕನ್ನಡ (Kannada)</option>
+            <option value="or">ଓଡ଼ିଆ (Odia)</option>
+            <option value="as">অসমীয়া (Assamese)</option>
+          </select>
+        </div>
+
+        <!-- Theme Selector -->
+        <div class="control-pill">
+          <label for="theme-select">🎨 Theme:</label>
+          <select id="theme-select" class="control-select">
+            <option value="default">Dark Command</option>
+            <option value="high-contrast">High Contrast Yellow</option>
+            <option value="day-shift">Day Shift Clean</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- View Mode Tabs Bar -->
+  <nav class="view-tabs-bar">
+    <div class="container tabs-container">
+      <button class="view-tab-btn active" data-mode="single" onclick="switchViewMode('single')">
+        <span data-i18n="tabSingleZone">🔍 Single Zone Inspector</span>
+      </button>
+      <button class="view-tab-btn" data-mode="wall" onclick="switchViewMode('wall')">
+        <span data-i18n="tabVideoWall">🖥️ 4-Camera Video Wall (Control Room)</span>
+      </button>
+      <button class="view-tab-btn" data-mode="webcam" onclick="switchViewMode('webcam')">
+        <span data-i18n="tabWebcam">🎥 Live Webcam Test</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Hero Telemetry Banner -->
+  <section class="hero-banner">
+    <div class="container hero-grid">
+      <div class="metric-card">
+        <div class="metric-icon-box green">🟢</div>
+        <div class="metric-info">
+          <div class="metric-label">System Status</div>
+          <div class="metric-val">Live & Monitoring</div>
+        </div>
+      </div>
+
+      <div class="metric-card">
+        <div class="metric-icon-box blue">📹</div>
+        <div class="metric-info">
+          <div class="metric-label">Connected Feeds</div>
+          <div class="metric-val">4 Plant Zones</div>
+        </div>
+      </div>
+
+      <div class="metric-card">
+        <div class="metric-icon-box yellow">🛡️</div>
+        <div class="metric-info">
+          <div class="metric-label">EHS Compliance</div>
+          <div class="metric-val">OSHA 1910 / ISO 45001</div>
+        </div>
+      </div>
+
+      <div class="metric-card">
+        <div class="metric-icon-box red">🚨</div>
+        <div class="metric-info">
+          <div class="metric-label">Emergency Siren</div>
+          <div class="metric-val">8 Languages Ready</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Body Content -->
+  <main class="container">
+
+    <!-- FEATURE 4: Automated EHS Emergency Dispatch Toast -->
+    <div class="dispatch-toast" id="dispatch-toast">
+      <div class="dispatch-header">
+        <div class="dispatch-title">
+          <span>🚨</span>
+          <span data-i18n="emergencyDispatchTitle">AUTOMATED EHS EMERGENCY DISPATCH TRIGGERED</span>
+        </div>
+        <span class="dispatch-badge" id="dispatch-id">ERT-8412</span>
+      </div>
+      <div class="dispatch-grid">
+        <div class="dispatch-row">
+          <span>Incident Event:</span>
+          <strong id="dispatch-incident" style="color:var(--accent-red);">Unauthorized Danger Zone Intrusion</strong>
+        </div>
+        <div class="dispatch-row">
+          <span>Plant Location:</span>
+          <strong id="dispatch-zone">ZONE C - ACID REACTOR</strong>
+        </div>
+        <div class="dispatch-row">
+          <span>Target Dispatch:</span>
+          <strong id="dispatch-target">Dr. K. Srinivas Rao & Medical Station 1</strong>
+        </div>
+        <div class="dispatch-row">
+          <span>First Responder ETA:</span>
+          <strong id="dispatch-eta" style="color:var(--accent-yellow);">1.2 minutes</strong>
+        </div>
+      </div>
+      <div class="dispatch-actions">
+        <button class="btn btn-secondary" style="padding:0.4rem 0.85rem; font-size:0.78rem;" onclick="dismissDispatchToast()">
+          Dismiss
+        </button>
+        <button class="btn btn-danger" style="padding:0.4rem 0.85rem; font-size:0.78rem;" onclick="acknowledgeDispatch()">
+          ✓ Acknowledge & Deploy First Responder
+        </button>
+      </div>
+    </div>
+
+    <!-- FEATURE 2: 4-Camera Video Wall (SCADA Control Room Grid) -->
+    <section class="video-wall-container" id="video-wall-section">
+      <div class="section-head">
+        <div>
+          <h2 class="section-title">
+            <span>🖥️</span>
+            <span data-i18n="tabVideoWall">4-Camera Video Wall (SCADA Control Room)</span>
+          </h2>
+          <div class="section-sub">
+            Real-time simultaneous surveillance grid across all 4 industrial plant zones. Click any feed to zoom.
+          </div>
+        </div>
+        <div>
+          <button class="btn btn-cyan" onclick="switchViewMode('single')">
+            🔍 Switch to Single Zone Inspector
+          </button>
+        </div>
+      </div>
+
+      <div class="video-wall-grid" id="video-wall-grid">
+        <!-- Dynamically rendered -->
+      </div>
+    </section>
+
+    <!-- FEATURE 1: Live Laptop Webcam / Mobile Edge Vision Mode -->
+    <section class="webcam-container" id="webcam-section">
+      <div class="section-head">
+        <div>
+          <h2 class="section-title">
+            <span>🎥</span>
+            <span data-i18n="tabWebcam">Live Laptop Webcam / Mobile Video Inspection</span>
+          </h2>
+          <div class="section-sub">
+            Stand in front of the camera with or without a safety helmet/cap to test live edge AI detection and audio voice sirens.
+          </div>
+        </div>
+        <div style="display:flex; gap:0.5rem;">
+          <span class="status-pill warning" id="webcam-status-pill">WEBCAM STANDBY</span>
+          <button class="btn btn-secondary" onclick="startWebcam()">
+            ▶️ <span data-i18n="btnStartWebcam">Start Webcam</span>
+          </button>
+          <button class="btn btn-secondary" onclick="stopWebcam()">
+            ⏹️ <span data-i18n="btnStopWebcam">Stop</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="webcam-workspace">
+        <div class="webcam-video-box">
+          <div class="cctv-top-bar">
+            <div class="cctv-info-left">
+              <span class="live-dot"></span>
+              <span>LIVE EDGE WEBCAM FEED</span>
+            </div>
+            <div class="cctv-telemetry-right">
+              <span>● STREAMING</span>
+              <span>30.0 FPS</span>
+            </div>
+          </div>
+          <div style="position:relative; width:100%; min-height:360px; background:#000; display:flex; align-items:center; justify-content:center;">
+            <video id="webcam-video" class="webcam-video-element" autoplay playsinline muted></video>
+            <div class="hud-overlay">LIVE WEBCAM HUD</div>
+          </div>
+          <div class="cctv-action-bar">
+            <button class="btn btn-primary" id="btn-inspect-webcam" onclick="inspectWebcamFrame()">
+              📸 <span data-i18n="btnInspectWebcam">Inspect Live Frame</span>
+            </button>
+            <button class="btn btn-danger" onclick="playCurrentSiren()">
+              🚨 <span data-i18n="btnSirenTest">Sound Voice Siren</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="inspection-panel">
+          <div class="panel-card">
+            <div class="panel-card-head">
+              <span class="panel-card-title">
+                📊 <span>Webcam AI Detection Result</span>
+              </span>
+            </div>
+            <div style="margin-bottom:0.85rem; text-align:center;">
+              <img id="webcam-annotated-result" style="width:100%; border-radius:8px; border:1px solid var(--border-color); display:none; max-height:220px; object-fit:contain; background:#000;" alt="Webcam Annotated">
+            </div>
+            <div class="score-display-box">
+              <div class="score-circle compliant" id="webcam-score-val">
+                --
+                <span>SCORE</span>
+              </div>
+              <div style="flex:1;">
+                <div id="webcam-alert-text" style="font-size:0.85rem; color:var(--text-main);">
+                  Click <strong>"Inspect Live Frame"</strong> to test helmet and posture detection live.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SINGLE ZONE INSPECTION (Default View) -->
+    <div id="single-zone-section">
+      <!-- STEP 1: Select Factory CCTV Camera Zone -->
+      <section class="section-block">
+        <div class="section-head">
+          <div>
+            <h2 class="section-title">
+              <span>🎥</span>
+              <span data-i18n="step1Title">Step 1: Select Factory CCTV Camera Zone</span>
+            </h2>
+            <div class="section-sub" data-i18n="step1Sub">
+              Click any camera feed below to run real-time AI PPE and hazard scanning
+            </div>
+          </div>
+          <div>
+            <button class="btn btn-secondary" onclick="switchViewMode('wall')">
+              🖥️ View All 4 Feeds
+            </button>
+          </div>
+        </div>
+
+        <!-- Camera Cards Grid -->
+        <div class="camera-cards-grid" id="camera-cards-container">
+          <!-- Dynamically populated by app.js -->
+        </div>
+      </section>
+
+      <!-- STEP 2: CCTV Feed & Computer Vision Inspection -->
+      <section class="section-block">
+        <div class="section-head">
+          <div>
+            <h2 class="section-title">
+              <span>🔍</span>
+              <span data-i18n="step2Title">Step 2: CCTV Feed & Computer Vision Inspection</span>
+            </h2>
+            <div class="section-sub" data-i18n="step2Sub">
+              AI automatically verifies Hard Hats, Hi-Vis Vests, Red Zones, and Worker Falls
+            </div>
+          </div>
+        </div>
+
+        <div class="inspection-workspace">
+          <!-- Left: Live CCTV Player Box -->
+          <div class="cctv-player-box">
+            <div class="cctv-top-bar">
+              <div class="cctv-info-left">
+                <span class="live-dot"></span>
+                <span id="cctv-cam-title">CAM-01: Zone A - Assembly Line</span>
+              </div>
+              <div class="cctv-telemetry-right">
+                <span>● REC</span>
+                <span id="cctv-fps">29.8 FPS</span>
+                <span>1080p HD</span>
+              </div>
+            </div>
+
+            <!-- FEATURE 3: Geofence Active Instruction Banner -->
+            <div class="geofence-banner-bar" id="geofence-banner">
+              <div>
+                ✏️ <strong>Geofence Drawing Active:</strong> Click on the CCTV feed to define boundary vertices (<span id="geofence-points-count">0 points</span>).
+              </div>
+              <div style="display:flex; gap:0.4rem;">
+                <button class="btn btn-primary" style="padding:0.25rem 0.65rem; font-size:0.75rem;" onclick="armCustomGeofence()">
+                  🛡️ <span data-i18n="btnArmGeofence">Arm Geofence</span>
+                </button>
+                <button class="btn btn-secondary" style="padding:0.25rem 0.65rem; font-size:0.75rem;" onclick="resetGeofence()">
+                  🔄 <span data-i18n="btnResetGeofence">Reset</span>
+                </button>
+              </div>
+            </div>
+
+            <div class="feed-display-area" id="feed-display-area">
+              <img id="cctv-live-frame" class="cctv-img" src="/data/cctv_feeds/feed_zone_a_compliant.jpg" alt="CCTV Stream">
+              <canvas id="geofence-canvas" class="geofence-canvas"></canvas>
+              <div class="hud-overlay">AI VISION HUD ACTIVE</div>
+            </div>
+
+            <div class="cctv-action-bar">
+              <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
+                <button class="btn btn-primary" id="btn-scan" onclick="runInspection()">
+                  🔍 <span data-i18n="btnScanNow">Run Safety Inspection</span>
+                </button>
+                <button class="btn btn-cyan" id="btn-draw-geofence" onclick="toggleGeofenceDrawer()">
+                  ✍️ <span data-i18n="btnDrawGeofence">Calibrate Geofence</span>
+                </button>
+                <button class="btn btn-danger" id="btn-play-siren" onclick="playCurrentSiren()">
+                  🚨 <span data-i18n="btnSirenTest">Sound Spoken Siren Alert</span>
+                </button>
+              </div>
+
+              <div>
+                <label for="custom-frame-input" class="btn btn-secondary" style="cursor:pointer; margin:0;">
+                  📸 <span>Upload Custom Frame</span>
+                </label>
+                <input type="file" id="custom-frame-input" accept="image/*" style="display:none;">
+              </div>
+            </div>
+          </div>
+
+          <!-- Right: Inspector Results & Telemetry -->
+          <div class="inspection-panel">
+            <!-- Compliance Score Card -->
+            <div class="panel-card">
+              <div class="panel-card-head">
+                <span class="panel-card-title">
+                  📊 <span data-i18n="safetyScoreLabel">Safety Compliance Score</span>
+                </span>
+              </div>
+              <div class="score-display-box">
+                <div class="score-circle compliant" id="score-circle">
+                  96%
+                  <span>SCORE</span>
+                </div>
+                <div class="score-breakdown">
+                  <div class="breakdown-row">
+                    <span data-i18n="workersCountLabel">Workers on Floor:</span>
+                    <span class="breakdown-val" id="workers-count-val">2</span>
+                  </div>
+                  <div class="breakdown-row">
+                    <span>Hard Hat Compliance:</span>
+                    <span class="breakdown-val" id="helmets-count-val">2 / 2</span>
+                  </div>
+                  <div class="breakdown-row">
+                    <span>Hi-Vis Vest Compliance:</span>
+                    <span class="breakdown-val" id="vests-count-val">2 / 2</span>
+                  </div>
+                  <div class="breakdown-row">
+                    <span data-i18n="violationsCountLabel">Violations:</span>
+                    <span class="breakdown-val" id="violations-count-val" style="color:var(--accent-green);">0</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Hazards & Violations List -->
+            <div class="panel-card">
+              <div class="panel-card-head">
+                <span class="panel-card-title">
+                  ⚠️ <span>Identified Hazards & Violations</span>
+                </span>
+              </div>
+              <div class="violations-list" id="violations-list-container">
+                <!-- Dynamically populated -->
+              </div>
+            </div>
+
+            <!-- Emergency Spoken Siren Alarm Box -->
+            <div class="panel-card siren-box">
+              <div class="panel-card-head">
+                <span class="panel-card-title">
+                  🔊 <span>Multilingual Floor Siren Alarm</span>
+                </span>
+                <span style="font-size:0.75rem; color:var(--accent-yellow); font-weight:700;">TTS ENGINE READY</span>
+              </div>
+              <div class="siren-player-ui">
+                <div class="siren-transcript-box" id="siren-transcript">
+                  <em>Loading siren speech module...</em>
+                </div>
+                <div class="siren-controls">
+                  <button class="btn btn-danger" style="padding:0.45rem 0.85rem; font-size:0.8rem;" onclick="playCurrentSiren()">
+                    ▶️ <span>Play Alarm</span>
+                  </button>
+                  <span style="font-size:0.75rem; color:var(--text-dim);">Spoken in Worker's Native Language</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- STEP 3: Shift Safety Audit & ISO 45001 Certificate -->
+      <section class="section-block" id="audit-section">
+        <div class="section-head">
+          <div>
+            <h2 class="section-title">
+              <span>📄</span>
+              <span data-i18n="step3Title">Step 3: Shift Safety Audit & ISO 45001 Certificate</span>
+            </h2>
+            <div class="section-sub" data-i18n="step3Sub">
+              Generate certified OSHA 1910 and ISO 45001 EHS shift safety audit report
+            </div>
+          </div>
+          <div class="audit-actions">
+            <button class="btn btn-secondary" onclick="loadShiftAudit()">
+              🔄 <span>Refresh Audit</span>
+            </button>
+            <button class="btn btn-primary" onclick="printAuditReport()">
+              🖨️ <span data-i18n="btnPrintReport">Print / Save Report Card</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Audit Report Container -->
+        <div class="audit-container">
+          <div class="audit-header">
+            <div>
+              <div class="audit-org-title">SURAKSHA INDUSTRIAL WORKS - UNIT 4 HYDERABAD</div>
+              <div style="font-size:0.9rem; color:var(--text-muted); font-weight:600;">EHS Workplace Safety Compliance & Incident Audit</div>
+              <div class="audit-meta-row">
+                <div>Shift ID: <strong id="audit-shift-id">SHIFT-B-2026-09-28</strong></div>
+                <div>Timestamp: <strong id="audit-date">2026-09-28 20:20:00</strong></div>
+                <div>EHS Officer: <strong id="audit-officer">Dr. K. Srinivas Rao (Safety Director)</strong></div>
+              </div>
+            </div>
+            <div class="audit-badge-stamp">
+              <div>★ ISO 45001:2018 ★</div>
+              <div style="font-size:0.7rem; margin-top:2px;">AUDIT CERTIFIED</div>
+            </div>
+          </div>
+
+          <div class="audit-kpis-grid">
+            <div class="kpi-card">
+              <div class="kpi-val" id="audit-overall-score" style="color:var(--accent-green);">94%</div>
+              <div class="kpi-title">Shift Compliance Rate</div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-val" id="audit-total-workers">28</div>
+              <div class="kpi-title">Workers Scanned</div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-val" id="audit-total-incidents" style="color:var(--accent-red);">2</div>
+              <div class="kpi-title">Incidents Intercepted</div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-val" style="color:var(--accent-yellow);">100%</div>
+              <div class="kpi-title">Siren Trigger Accuracy</div>
+            </div>
+          </div>
+
+          <div class="audit-table-wrapper">
+            <table class="audit-table">
+              <thead>
+                <tr>
+                  <th>Time</th>
+                  <th>Zone / Camera</th>
+                  <th>Incident Type</th>
+                  <th>Corrective Action Taken</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="audit-table-body">
+                <!-- Dynamically populated -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer-wrapper">
+    <div class="container footer-content">
+      <div>
+        <strong>SurakshaVision AI (सुरक्षाविजन AI)</strong> &copy; 2026. Industrial Safety & EHS Vision Command.
+      </div>
+      <div>
+        100% Edge Processing &bull; Zero External API Dependency &bull; ISO 45001 & OSHA 1910 Compliant
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="/static/js/translations.js"></script>
+  <script src="/static/js/app.js"></script>
+</body>
+</html>
