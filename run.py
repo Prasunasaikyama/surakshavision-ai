@@ -12,7 +12,7 @@ import time
 import uvicorn
 
 PORT = int(os.environ.get("PORT", 8002))
-HOST = os.environ.get("HOST", "0.0.0.0" if os.environ.get("RENDER") else "127.0.0.1")
+HOST = os.environ.get("HOST", "127.0.0.1")
 IS_HEADLESS = bool(os.environ.get("RENDER") or os.environ.get("HEADLESS"))
 
 def open_browser():
@@ -20,8 +20,8 @@ def open_browser():
         time.sleep(1.5)
         try:
             webbrowser.open(f"http://127.0.0.1:{PORT}")
-        except Exception:
-            pass
+        except (webbrowser.Error, OSError):
+            return
 
 if __name__ == "__main__":
     if hasattr(sys.stdout, "reconfigure"):
